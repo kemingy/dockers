@@ -18,5 +18,5 @@ jobs:
       run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
     - name: Build the Docker image and push to GitHub packages
       run: |
-        docker build . --file Dockerfile --tag docker.pkg.github.com/${GITHUB_REPOSITORY}:${GITHUB_ACTION}
+        docker build . --file Dockerfile --tag docker.pkg.github.com/${GITHUB_REPOSITORY}/gcsdk:${GITHUB_ACTION}
         docker push docker.pkg.github.com/${GITHUB_REPOSITORY}:${GITHUB_ACTION}
