@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+    - name: Build the Docker image and push to GitHub packages
+      run: |
+        docker build . --file Dockerfile --tag docker.pkg.github.com/${GITHUB_REPOSITORY}:${GITHUB_ACTION}
+        docker push docker.pkg.github.com/${GITHUB_REPOSITORY}:${GITHUB_ACTION}
